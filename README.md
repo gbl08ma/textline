@@ -3,7 +3,7 @@ Textline
 
 This is a [Minetest](http://www.minetest.net/) mod that adds a text screen that is three blocks wide and is controlled with [Digilines](https://github.com/minetest-mods/digilines/). It works very similarly to the LCD screen that comes with Digilines, but is meant to be readable from farther away.
 
-![Screenshot](https://raw.githubusercontent.com/gbl08ma/textline/screenshot.png?raw=true)
+![Screenshot](https://raw.githubusercontent.com/gbl08ma/textline/master/screenshot.png?raw=true)
 
 ## Features
 
