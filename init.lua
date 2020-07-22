@@ -43,7 +43,7 @@ end
 local clearscreen = function(pos)
     local objects = minetest.get_objects_inside_radius(pos, 0.5)
     for _, o in ipairs(objects) do
-        if o:get_luaentity().name == "textline:text" then
+        if o:get_luaentity() and o:get_luaentity().name == "textline:text" then
             o:remove()
         end
     end
