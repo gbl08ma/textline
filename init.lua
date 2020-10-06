@@ -122,6 +122,8 @@ minetest.register_node("textline:lcd", {
         end
     end,
 
+    _digistuff_channelcopier_fieldname = "channel",
+ 
     digiline = 
     {
         receptor = {},
