@@ -98,7 +98,7 @@ minetest.register_node("textline:lcd", {
     paramtype2 = "wallmounted",
     node_box = lcd_box,
     selection_box = lcd_box,
-    groups = {choppy = 3, dig_immediate = 2},
+    groups = {choppy = 3, dig_immediate = 2, not_blocking_trains = 1},
 
     after_place_node = function (pos, placer, itemstack)
         local param2 = minetest.get_node(pos).param2
@@ -147,7 +147,7 @@ minetest.register_node("textline:background", {
     paramtype2 = "wallmounted",
     node_box = lcd_box,
     selection_box = lcd_box,
-    groups = {choppy = 3, dig_immediate = 2},
+    groups = {choppy = 3, dig_immediate = 2, not_blocking_trains = 1},
 
     light_source = 0,
 })
