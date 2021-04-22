@@ -56,7 +56,7 @@ local prepare_writing = function(pos)
         {x = pos.x + lcd_info.delta.x,
          y = pos.y + lcd_info.delta.y,
          z = pos.z + lcd_info.delta.z}, "textline:text")
-    text:setyaw(lcd_info.yaw or 0)
+    text:set_yaw(lcd_info.yaw or 0)
     return text
 end
 
@@ -123,8 +123,8 @@ minetest.register_node("textline:lcd", {
     end,
 
     _digistuff_channelcopier_fieldname = "channel",
- 
-    digiline = 
+
+    digiline =
     {
         receptor = {},
         effector = {
@@ -159,7 +159,7 @@ minetest.register_entity("textline:text", {
     textures = {},
 
     on_activate = function(self)
-        local meta = minetest.get_meta(self.object:getpos())
+        local meta = minetest.get_meta(self.object:get_pos())
         local text = meta:get_string("text")
         self.object:set_properties({textures={textline:generate_texture(textline:create_lines(text))}})
     end
