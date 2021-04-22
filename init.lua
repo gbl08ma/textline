@@ -152,7 +152,7 @@ minetest.register_node("textline:hud", {
         if param2 == 0 or param2 == 1 then
             minetest.add_node(pos, {name = "textline:hud", param2 = 3})
         end
-        prepare_writing (pos)
+        prepare_writing(pos)
     end,
 
     on_construct = function(pos)
@@ -175,7 +175,7 @@ minetest.register_node("textline:hud", {
     {
         receptor = {},
         effector = {
-            action = on_digiline_receive
+            action = on_digiline_receive,
         },
     },
 
