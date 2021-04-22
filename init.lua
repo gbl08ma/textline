@@ -135,6 +135,53 @@ minetest.register_node("textline:lcd", {
     light_source = 0,
 })
 
+minetest.register_node("textline:hud", {
+    drawtype = "airlike",
+    description = "Transparent Textline",
+    inventory_image = "textline_icon.png",
+    wield_image = "textline_icon.png",
+    paramtype = "light",
+    sunlight_propagates = true,
+    paramtype2 = "wallmounted",
+    node_box = lcd_box,
+    selection_box = lcd_box,
+    groups = {choppy = 3, dig_immediate = 2, not_blocking_trains = 1},
+
+    after_place_node = function (pos, placer, itemstack)
+        local param2 = minetest.get_node(pos).param2
+        if param2 == 0 or param2 == 1 then
+            minetest.add_node(pos, {name = "textline:hud", param2 = 3})
+        end
+        prepare_writing(pos)
+    end,
+
+    on_construct = function(pos)
+        reset_meta(pos)
+    end,
+
+    on_destruct = function(pos)
+        clearscreen(pos)
+    end,
+
+    on_receive_fields = function(pos, formname, fields, sender)
+        if (fields.channel) then
+            minetest.get_meta(pos):set_string("channel", fields.channel)
+        end
+    end,
+
+    _digistuff_channelcopier_fieldname = "channel",
+
+    digiline =
+    {
+        receptor = {},
+        effector = {
+            action = on_digiline_receive,
+        },
+    },
+
+    light_source = 0,
+})
+
 minetest.register_node("textline:background", {
     drawtype = "nodebox",
     description = "Textline background",
