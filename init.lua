@@ -140,8 +140,6 @@ minetest.register_node("textline:hud", {
     description = "Transparent Textline",
     inventory_image = "textline_icon.png",
     wield_image = "textline_icon.png",
-    -- tiles = {"textline_anyside.png"},
-
     paramtype = "light",
     sunlight_propagates = true,
     paramtype2 = "wallmounted",
