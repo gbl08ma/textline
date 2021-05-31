@@ -50,7 +50,7 @@ local clearscreen = function(pos)
 end
 
 local prepare_writing = function(pos)
-    lcd_info = textlines[minetest.get_node(pos).param2]
+    local lcd_info = textlines[minetest.get_node(pos).param2]
     if lcd_info == nil then return end
     local text = minetest.add_entity(
         {x = pos.x + lcd_info.delta.x,
