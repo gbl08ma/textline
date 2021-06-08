@@ -50,7 +50,7 @@ local clearscreen = function(pos)
 end
 
 local prepare_writing = function(pos)
-    lcd_info = textlines[minetest.get_node(pos).param2]
+    local lcd_info = textlines[minetest.get_node(pos).param2]
     if lcd_info == nil then return end
     local text = minetest.add_entity(
         {x = pos.x + lcd_info.delta.x,
@@ -138,8 +138,8 @@ minetest.register_node("textline:lcd", {
 minetest.register_node("textline:hud", {
     drawtype = "airlike",
     description = "Transparent Textline",
-    inventory_image = "textline_icon.png",
-    wield_image = "textline_icon.png",
+    inventory_image = "textline_hud.png",
+    wield_image = "textline_hud.png",
     paramtype = "light",
     sunlight_propagates = true,
     paramtype2 = "wallmounted",
@@ -297,4 +297,16 @@ minetest.register_craft({
         {"mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_green_off","default:glass"},
         {"default:glass","default:glass","default:glass"}
     }
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "textline:lcd",
+	recipe = {"textline:hud"},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "textline:hud",
+	recipe = {"textline:lcd"},
 })
