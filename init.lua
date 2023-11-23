@@ -37,7 +37,9 @@ local textlines = {
 }
 
 local reset_meta = function(pos)
-    minetest.get_meta(pos):set_string("formspec", "field[channel;Channel;${channel}]")
+    local meta = minetest.get_meta(pos)
+    meta:set_string("formspec", "field[channel;Channel;${channel}]")
+    meta:set_string("color", "#f60")
 end
 
 local clearscreen = function(pos)
@@ -65,18 +67,26 @@ local on_digiline_receive = function(pos, node, channel, msg)
     local setchan = meta:get_string("channel")
     if setchan ~= channel then return end
 
-    meta:set_string("text", msg)
-    if msg ~= "" then
-        local text = meta:get_string("text")
-        local objects = minetest.get_objects_inside_radius(pos, 0.5)
-        for _, o in ipairs(objects) do
-            local lentity = o:get_luaentity()
-            if lentity ~= nil then
-                local lname = lentity.name
-                if lname ~= nil and lname == "textline:text" then
-                    o:set_properties({textures={textline:generate_texture(textline:create_lines(text))}})
-                end
-            end
+    if type(msg) == "table" then
+        if msg.color and (msg.color:match("#%x%x%x%x%x%x") or msg.color:match("#%x%x%x")) then
+            meta:set_string("color", msg.color)
+        end
+        if msg.text then
+            meta:set_string("text", msg.text)
+        end
+    elseif type(msg) == "string" or type(msg) == "number" then
+        meta:set_string("text", msg)
+    else return end
+
+    local objects = minetest.get_objects_inside_radius(pos, 0.5)
+    for _, object in ipairs(objects) do
+        local lentity = object:get_luaentity()
+        if lentity and lentity.name == "textline:text" then
+            local color = meta:get_string("color")
+            local lines = textline:create_lines(meta:get_string("text"))
+            local texture = textline:generate_texture(lines, color)
+
+            object:set_properties({textures={texture}})
         end
     end
 end
@@ -207,8 +217,11 @@ minetest.register_entity("textline:text", {
 
     on_activate = function(self)
         local meta = minetest.get_meta(self.object:get_pos())
-        local text = meta:get_string("text")
-        self.object:set_properties({textures={textline:generate_texture(textline:create_lines(text))}})
+        local color = meta:get_string("color")
+        local lines = textline:create_lines(meta:get_string("text"))
+        local texture = textline:generate_texture(lines, color)
+
+        self.object:set_properties({textures={texture}})
     end
 })
 
@@ -237,14 +250,14 @@ function textline:create_lines(text)
     return tab
 end
 
-function textline:generate_texture(lines)
+function textline:generate_texture(lines, color)
     local texture = "[combine:"..LCD_WIDTH .."x"..LCD_HEIGHT
     local ypos = -2
     for i = 1, #lines do
         texture = texture..self:generate_line(lines[i], ypos)
         ypos = ypos + LINE_HEIGHT + LINE_SPACING
     end
-    return texture
+    return texture .. "^[colorize:" .. color
 end
 
 function textline:generate_line(s, ypos)
