@@ -83,6 +83,10 @@ local on_digiline_receive = function(pos, node, channel, msg)
         local lentity = object:get_luaentity()
         if lentity and lentity.name == "textline:text" then
             local color = meta:get_string("color")
+            if color == "" then
+                color = "#f60"
+                meta:set_string("color", "#f60")
+            end
             local lines = textline:create_lines(meta:get_string("text"))
             local texture = textline:generate_texture(lines, color)
 
