@@ -36,7 +36,15 @@ The background node appears in the inventory as an orange square with "BKG" writ
 
 Digilines should be connected to the "TXT" block. You can configure its channel by clicking with the place/use button on them (default: right-click). Then you can just use it as a standard Digilines receiver. For example, for a screen running on channel `test`, you could execute the following code on a connected LuaController:
 
-`digiline_send("test", "This is a test\nThis is the second line\nThird line\nFourth line")`
+`digiline_send("textline", "This is a test\nThis is the second line\nThird line\nFourth line")`
+
+By default, the color of the text is orange. To change the color of the text (hex), execute the following code:
+
+`digiline_send("textline", {color="#1f0"})`
+
+Additionally, send the `text` field to change the text at the same time:
+
+`digiline_send("textline", {color="#5292F7", text="This text is sky blue"})`
 
 ## License
 
